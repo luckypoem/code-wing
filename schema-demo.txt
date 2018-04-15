@@ -1,0 +1,17 @@
+<wing:schema version="1.0"/>
+<wing:bean use="person"/>
+<wing:bean use="personList"/>
+
+${person.name}
+
+<wing:foreach list="personList" var="p">
+    ${p.xxx}
+</wing:foreach>
+
+<wing:if test="person.name is 'abc'">
+
+</wing:if>
+
+<wing:if test="person.name not is 'abc' and person.age is 18">
+
+</wing:if>
