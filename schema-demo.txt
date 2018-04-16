@@ -1,6 +1,6 @@
-<wing:schema version="1.0"/>
-<wing:bean use="person"/>
-<wing:bean use="personList"/>
+<wing:schema version='1.0'/>
+<wing:bean use='person'/>
+<wing:bean use='personList'/>
 
 ${person.name}
 

@@ -1,8 +1,11 @@
 package cn.lazycat.codewing.coder;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import cn.lazycat.codewing.coder.exception.BadSchemaPreDefinitionException;
+import cn.lazycat.codewing.coder.exception.InconsistentVersionException;
+import cn.lazycat.codewing.coder.tool.StringTool;
+
+import java.io.*;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -32,17 +35,88 @@ import java.util.List;
  */
 public class Schema {
 
+    /**
+     * Set the input stream of the schema, the schema object will read the text from
+     * this input stream, and the text will be treated as a schema by coder. The Schema
+     * also parses the prefix definition of the text to get information about beans and versions.
+     * @param input use this stream to get schema text
+     */
+    public void setInput(InputStream input)
+            throws IOException {
+        parseSchemaInfo(input);
+    }
+
+    /**
+     * Get the contents of the Schema, which does not include the prefix definition,
+     * the bean definition, but includes unhandled placeholders.
+     * @return contents of the schema.
+     */
+    public String getSchemaString() {
+        return content;
+
+    }
+
+    /**
+     * Get all the ids of beans that are resolved according to beans definition.
+     * @return all beans' ids.
+     */
+    public List<String> getBeanIds() {
+        return beanIds;
+    }
+
+    // get version, beans id, content from input stream.
+    //
+    private void parseSchemaInfo(InputStream in) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        String line = reader.readLine();
+        if (StringTool.isEmpty(line) || !line.matches(versionRegex)) {
+            throw new RuntimeException(new BadSchemaPreDefinitionException());
+        }
+
+        double currentVersion;
+        try {
+            String vstr = line.substring(
+                    line.indexOf("version='") + 9,
+                    line.indexOf("'/>")
+            );
+            currentVersion = Double.parseDouble(vstr);
+        } catch (NumberFormatException e) {
+            throw new RuntimeException(new BadSchemaPreDefinitionException());
+        }
+
+        if (currentVersion != VERSION) {
+            throw new RuntimeException(new InconsistentVersionException());
+        }
+
+        StringBuilder sb = new StringBuilder();
+        while ((line = reader.readLine()) != null) {
+            if (line.matches(beansRegex)) {
+                String beanId = line.substring(
+                        line.indexOf("use='") + 5,
+                        line.indexOf("'/>")
+                );
+                beanIds.add(beanId);
+            }
+            else {
+                sb.append(line).append('\n');
+            }
+        }
+
+        // delete last \n
+        StringTool.deleteLastChar(sb);
+
+        content = sb.toString();
+    }
+
     // current available version.
     private static final double VERSION = 1.0;
 
-    // reader to read schema file.
-    private BufferedReader reader;
+    // All known ids' names from prefix definition in schema file.
+    private List<String> beanIds = new LinkedList<>();
 
-    private double currentVersion;
+    // the text that not include prefix definition.
+    private String content;
 
-    private List<String> beanIds;
-
-    public void setInput(InputStream input) {
-        reader = new BufferedReader(new InputStreamReader(input));
-    }
+    private static final String versionRegex = "^<wing:schema version='\\d+\\.\\d+'/>$";
+    private static final String beansRegex = "^<wing:bean use='\\w+'/>$";
 }
