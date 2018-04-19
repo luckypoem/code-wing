@@ -1,8 +1,10 @@
 package cn.lazycat.codewing.coder.replace;
 
-import cn.lazycat.codewing.coder.Bean;
+import cn.lazycat.codewing.coder.replace.label.ListLabelReplacer;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -32,6 +34,17 @@ import java.util.List;
  * @author lazycat
  */
 public abstract class Replacer {
+
+    /**
+     *
+     * @return the basic replacer list.
+     */
+    public static List<Replacer> getBasicReplacer() {
+        List<Replacer> replacers = new ArrayList<>();
+        replacers.add(new ListLabelReplacer());
+
+        return replacers;
+    }
 
     /**
      * Return the regex expression that describes a placeholder.
@@ -72,11 +85,12 @@ public abstract class Replacer {
         return true;
     }
 
+    public void setBeans(Map<String, Object> beans) {
+        this.beans = beans;
+    }
+
     // beans support for replacer.
     // Coder will add bean if needBeans() return true.
     //
-    protected List<Bean> beans = null;
-
-
-
+    protected Map<String, Object> beans = null;
 }

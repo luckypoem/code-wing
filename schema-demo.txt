@@ -2,16 +2,15 @@
 <wing:bean use='person'/>
 <wing:bean use='personList'/>
 
-${person.name}
+abcd
 
-<wing:foreach list="personList" var="p">
+<wing:foreach list='personList' var='p'>
     ${p.xxx}
 </wing:foreach>
 
-<wing:if test="person.name is 'abc'">
+abcd
 
-</wing:if>
+<wing:foreach list='aaa' var='bbb'>abcd</wing:foreach>
 
-<wing:if test="person.name not is 'abc' and person.age is 18">
 
-</wing:if>
+abcd
