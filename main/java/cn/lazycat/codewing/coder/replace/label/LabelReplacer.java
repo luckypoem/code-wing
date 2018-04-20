@@ -15,7 +15,7 @@ public abstract class LabelReplacer extends Replacer {
     protected abstract String generateResultString(String content);
 
     protected Map<String, String> getParams() {
-        return this.params;
+        return params;
     }
 
     @Override
@@ -31,7 +31,7 @@ public abstract class LabelReplacer extends Replacer {
             }
             StringTool.deleteLastChar(sb);
         }
-        sb.append(">.+</wing:").append(labelName).append(">");
+        sb.append(".*>.+</wing:").append(labelName).append(">");
 
         return sb.toString();
     }
@@ -59,7 +59,15 @@ public abstract class LabelReplacer extends Replacer {
         for (String eq : tmp) {
             String leftRight[] = eq.split("=");
             String paramName = leftRight[0];
-            String paramValue = leftRight[1].substring(1, leftRight[1].length() - 1);
+            String val = leftRight[1];
+
+            String paramValue;
+            if (val.contains("'")) {
+                paramValue = val.substring(1, val.length() - 1);
+            }
+            else {
+                paramValue = val;
+            }
 
             params.put(paramName, paramValue);
         }
@@ -70,5 +78,5 @@ public abstract class LabelReplacer extends Replacer {
         return generateResultString(placeholder.substring(startContent, endContent));
     }
 
-    protected Map<String, String> params = null;
+    private Map<String, String> params = null;
 }

@@ -1,9 +1,5 @@
 package cn.lazycat.codewing.coder.replace;
 
-import cn.lazycat.codewing.coder.replace.label.ListLabelReplacer;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,17 +30,6 @@ import java.util.Map;
  * @author lazycat
  */
 public abstract class Replacer {
-
-    /**
-     *
-     * @return the basic replacer list.
-     */
-    public static List<Replacer> getBasicReplacer() {
-        List<Replacer> replacers = new ArrayList<>();
-        replacers.add(new ListLabelReplacer());
-
-        return replacers;
-    }
 
     /**
      * Return the regex expression that describes a placeholder.

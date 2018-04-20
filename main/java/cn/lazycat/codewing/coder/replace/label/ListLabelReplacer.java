@@ -10,12 +10,6 @@ import java.util.Map;
 
 public class ListLabelReplacer extends LabelReplacer {
 
-    private boolean deleteLast = true;
-
-    public void setDeleteLast(boolean deleteLast) {
-        this.deleteLast = deleteLast;
-    }
-
     @Override
     protected String getLabelName() {
         return "foreach";
@@ -28,6 +22,7 @@ public class ListLabelReplacer extends LabelReplacer {
 
     @Override
     protected String generateResultString(String content) {
+
         Map<String, String> params = getParams();
         String listId = params.get("list");
 
@@ -63,6 +58,12 @@ public class ListLabelReplacer extends LabelReplacer {
                 }
             }
             sb.append(loop);
+        }
+
+        boolean deleteLast = true;
+        String deleteLastStr = params.get("deleteLast");
+        if ("false".equals(deleteLastStr)) {
+            deleteLast = false;
         }
 
         if (deleteLast) {

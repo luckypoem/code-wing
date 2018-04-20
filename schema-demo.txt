@@ -1,16 +1,17 @@
 <wing:schema version='1.0'/>
-<wing:bean use='person'/>
-<wing:bean use='personList'/>
+<wing:bean use='list'/>
 
 abcd
 
-<wing:foreach list='personList' var='p'>
-    ${p.xxx}
+<wing:foreach list='list' var='l' deleteLast=true>${l},</wing:foreach>
+
+<wing:foreach list='list' var='str' deleteLast=false>
+    the current string is: ${str}
+</wing:foreach>
+<wing:foreach list='list' var='str' deleteLast=false>
+    the current string is: ${str}!!!!</wing:foreach>
+<wing:foreach list='list' var='str'>the current string is: ${str}
 </wing:foreach>
 
 abcd
 
-<wing:foreach list='aaa' var='bbb'>abcd</wing:foreach>
-
-
-abcd

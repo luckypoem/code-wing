@@ -67,6 +67,7 @@ public class Schema {
     // get version, beans id, content from input stream.
     //
     private void parseSchemaInfo(InputStream in) throws IOException {
+        beanIds = new LinkedList<>();
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         String line = reader.readLine();
         if (StringTool.isEmpty(line) || !line.matches(versionRegex)) {
@@ -112,7 +113,7 @@ public class Schema {
     private static final double VERSION = 1.0;
 
     // All known ids' names from prefix definition in schema file.
-    private List<String> beanIds = new LinkedList<>();
+    private List<String> beanIds;
 
     // the text that not include prefix definition.
     private String content;

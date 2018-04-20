@@ -4,7 +4,6 @@ import cn.lazycat.codewing.coder.exception.BeanNotFoundException;
 import cn.lazycat.codewing.coder.replace.Replacer;
 import cn.lazycat.codewing.coder.tool.StringTool;
 
-import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,24 +31,12 @@ import java.util.Map;
 @SuppressWarnings("unused")
 public class Coder {
 
-    /**
-     * Create a code object that requires the support coder of schema to generate code.
-     * @param schema the support schema
-     */
-    public Coder(Schema schema) {
-        this.schema = schema;
-        initBeans();
-    }
 
     /**
      * Generate code from the schema.
      * @return result code, all placeholders are replaced.
      */
     public String makeCode() {
-
-        if (replacerList == null) {
-            replacerList = Replacer.getBasicReplacer();
-        }
 
         String template = schema.getSchemaString();
 
@@ -84,11 +71,17 @@ public class Coder {
         this.replacerList = replacerList;
     }
 
+    Coder(Schema schema, List<Replacer> replacers) {
+        this.schema = schema;
+        this.replacerList = replacers;
+        initBeans();
+    }
+
     // schema, the main support for coder to create code.
     private Schema schema;
 
     // Replacer to replace placeholders in schema string.
-    private List<Replacer> replacerList = null;
+    private List<Replacer> replacerList;
 
     // beans support for coding.
     private Map<String, Object> beans;
@@ -107,15 +100,5 @@ public class Coder {
 
             beans.put(id, bean);
         }
-    }
-
-    public static void main(String[] args) throws Exception {
-        BeanPool.addBean("person", "aa");
-        BeanPool.addBean("personList", "ddd");
-        Schema schema = new Schema();
-        schema.setInput(new FileInputStream("/Users/lazycat/Desktop/code/work/codewing/coder/src/schema-demo.txt"));
-        Coder coder = new Coder(schema);
-
-        System.out.println(coder.makeCode());
     }
 }
