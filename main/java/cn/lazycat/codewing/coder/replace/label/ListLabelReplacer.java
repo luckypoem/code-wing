@@ -1,12 +1,11 @@
 package cn.lazycat.codewing.coder.replace.label;
 
 import cn.lazycat.codewing.coder.exception.ObjectNotListException;
+import cn.lazycat.codewing.coder.tool.BeanTool;
 import cn.lazycat.codewing.coder.tool.ReflectTool;
 import cn.lazycat.codewing.coder.tool.StringTool;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ListLabelReplacer extends LabelReplacer {
 
@@ -33,7 +32,8 @@ public class ListLabelReplacer extends LabelReplacer {
 
         String varName = params.get("var");
 
-        Map<String, String> fields = createElFieldMap(content, varName);
+        Map<String, String> fields = BeanTool.parseEL(content,
+                Collections.singletonList(varName));
         List list = (List) bean;
 
         StringBuilder sb = new StringBuilder();
@@ -42,19 +42,9 @@ public class ListLabelReplacer extends LabelReplacer {
             loop = content;
             if (fields != null) {
                 for (Map.Entry<String, String> entry : fields.entrySet()) {
-                    String el = entry.getKey();
-                    String field = entry.getValue();
 
-                    String replace;
-                    if (field.contains(".")) {
-                        field = field.substring(1, field.length());
-                        replace = ReflectTool.getField(obj, field);
-                    }
-                    else {
-                        replace = obj.toString();
-                    }
-
-                    loop = loop.replaceAll(el, replace);
+                    String replace = BeanTool.getBeanReplacement(entry.getValue(), obj);
+                    loop = loop.replaceAll(entry.getKey(), replace);
                 }
             }
             sb.append(loop);
@@ -73,33 +63,4 @@ public class ListLabelReplacer extends LabelReplacer {
         return sb.toString();
     }
 
-    private static Map<String, String> createElFieldMap(String content, String var) {
-        if (content.length() <= 3) {
-            return null;
-        }
-        int len = content.length();
-        Map<String, String> map = new HashMap<>();
-        String sub;
-        for (int i = 0; i < len;  i++) {
-
-            sub = content.substring(i, len);
-            if (sub.startsWith("${" + var)) {
-                int j = sub.indexOf('}');
-                String el = sub.substring(2, j);
-
-                String field;
-                if (el.contains(".")) {
-                    field = "." + el.split("\\.")[1];
-                }
-                else {
-                    field = el;
-                }
-
-                map.put("\\$\\{" + el + "}", field);
-            }
-
-        }
-
-        return map;
-    }
 }

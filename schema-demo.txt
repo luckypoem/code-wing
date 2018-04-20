@@ -1,5 +1,14 @@
 <wing:schema version='1.0'/>
 <wing:bean use='list'/>
+<wing:bean use='p1'/>
+<wing:bean use='p2'/>
+<wing:bean use='persons'/>
+
+p1 is : ${p1.name}, age = ${p1.age}
+
+p2 is : ${p2.name}, age = ${p2.age}
+
+${ppp.name}
 
 abcd
 
@@ -15,3 +24,4 @@ abcd
 
 abcd
 
+<wing:foreach list='persons' var='p'>name=${p.name},age=${p.age};</wing:foreach>

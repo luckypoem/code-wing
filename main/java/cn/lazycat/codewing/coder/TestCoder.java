@@ -12,7 +12,17 @@ public class TestCoder {
         list.add("bbb");
         list.add("ccc");
         BeanPool.addBean("list", list);
-        CoderBuilder.setSchemaInputFile("C:\\Users\\63102\\Desktop\\work\\codewing\\coder\\src\\schema-demo.txt");
+        BeanPool.addBean("p1", new Person("Tang", 21));
+        BeanPool.addBean("p2", new Person("Hehe", 30));
+
+        List<Person> persons = new LinkedList<>();
+        persons.add(new Person("DaDa", 1));
+        persons.add(new Person("Xx", 2));
+        persons.add(new Person("NN", 3));
+
+        BeanPool.addBean("persons", persons);
+
+        CoderBuilder.setSchemaInputFile("/Users/lazycat/Desktop/code/work/codewing/coder/src/schema-demo.txt");
         CoderBuilder.appendBasicReplacer();
         Coder coder = CoderBuilder.build();
 //        Schema schema = new Schema();

@@ -1,11 +1,11 @@
 package cn.lazycat.codewing.coder;
 
+import cn.lazycat.codewing.coder.replace.BeanReplacer;
 import cn.lazycat.codewing.coder.replace.Replacer;
 import cn.lazycat.codewing.coder.replace.label.ListLabelReplacer;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,6 +32,7 @@ public class CoderBuilder {
 
     public static void appendBasicReplacer() {
         replacerList.add(new ListLabelReplacer());
+        replacerList.add(new BeanReplacer());
     }
 
     public static void clearReplacer() {
