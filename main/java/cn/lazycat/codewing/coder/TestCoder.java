@@ -1,9 +1,5 @@
 package cn.lazycat.codewing.coder;
 
-import cn.lazycat.codewing.coder.replace.Replacer;
-import cn.lazycat.codewing.coder.replace.label.ListLabelReplacer;
-
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,7 +12,8 @@ public class TestCoder {
         list.add("bbb");
         list.add("ccc");
         BeanPool.addBean("list", list);
-        CoderBuilder.setSchemaInputFile("/Users/lazycat/Desktop/code/work/codewing/coder/src/schema-demo.txt");
+        CoderBuilder.setSchemaInputFile("C:\\Users\\63102\\Desktop\\work\\codewing\\coder\\src\\schema-demo.txt");
+        CoderBuilder.appendBasicReplacer();
         Coder coder = CoderBuilder.build();
 //        Schema schema = new Schema();
 //        schema.setInput(new FileInputStream("/Users/lazycat/Desktop/code/work/codewing/coder/src/schema-demo.txt"));

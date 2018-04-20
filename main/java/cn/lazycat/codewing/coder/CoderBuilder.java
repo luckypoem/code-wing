@@ -6,13 +6,12 @@ import cn.lazycat.codewing.coder.replace.label.ListLabelReplacer;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 public class CoderBuilder {
 
-
     private CoderBuilder() {
-
     }
 
     public static Coder build() {
@@ -21,6 +20,9 @@ public class CoderBuilder {
 
     public static void setSchemaInputFile(String path)
             throws IOException {
+        if (schema == null) {
+            schema = new Schema();
+        }
         schema.setInput(new FileInputStream(path));
     }
 
@@ -29,32 +31,14 @@ public class CoderBuilder {
     }
 
     public static void appendBasicReplacer() {
-        replacerList.addAll(basicReplacer);
+        replacerList.add(new ListLabelReplacer());
     }
 
     public static void clearReplacer() {
         replacerList.clear();
     }
 
-    public static void deleteReplacer(Class<?> replacerCls) {
-        Iterator<Replacer> ite = replacerList.iterator();
-        while (ite.hasNext()) {
-            Replacer replacer = ite.next();
-            if (replacer.getClass().equals(replacerCls)) {
-                ite.remove();
-            }
-        }
-    }
-
     private static Schema schema;
 
-    private static List<Replacer> replacerList;
-
-    private static List<Replacer> basicReplacer;
-
-    static {
-        basicReplacer.add(new ListLabelReplacer());
-
-        replacerList = basicReplacer;
-    }
+    private static List<Replacer> replacerList = new LinkedList<>();
 }

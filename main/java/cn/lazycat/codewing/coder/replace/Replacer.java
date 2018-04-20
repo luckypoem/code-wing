@@ -1,5 +1,9 @@
 package cn.lazycat.codewing.coder.replace;
 
+import cn.lazycat.codewing.coder.replace.label.ListLabelReplacer;
+
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,7 +34,6 @@ import java.util.Map;
  * @author lazycat
  */
 public abstract class Replacer {
-
     /**
      * Return the regex expression that describes a placeholder.
      * Use this regex expression to determine if there is such placeholder in the schema.
