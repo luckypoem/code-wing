@@ -1,7 +1,5 @@
 package cn.lazycat.codewing.coder.replace;
 
-import cn.lazycat.codewing.coder.BeanPool;
-import cn.lazycat.codewing.coder.Person;
 import cn.lazycat.codewing.coder.tool.BeanTool;
 import cn.lazycat.codewing.coder.tool.StringTool;
 
@@ -45,8 +43,6 @@ public class BeanReplacer extends Replacer {
 
     @Override
     public String replace(String placeholder) {
-
-
 
         Map<String, String> replaceMap = BeanTool.parseEL(placeholder,
                 new ArrayList<>(beans.keySet()));

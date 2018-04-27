@@ -16,6 +16,14 @@ public class StringTool {
         sb.deleteCharAt(sb.length() - 1);
     }
 
+    public static String deleteLastChar(String str) {
+        return str.substring(0, str.length() - 1);
+    }
+
+    public static String deleteFirstChar(String str) {
+        return str.substring(1, str.length());
+    }
+
     public static boolean isMatching(String str, String regex) {
         return getMatcher(str, regex).matches();
     }
@@ -28,14 +36,8 @@ public class StringTool {
         return str.substring(0, 1).toUpperCase() + str.substring(1, str.length());
     }
 
-    public static int nextCharIndex(String str, int start, char ch) {
-        char[] characters = str.toCharArray();
-        for (int i = start; i < characters.length; ++i) {
-            if (characters[i] == ch) {
-                return i;
-            }
-        }
-        return -1;
+    public static String lowerFirstCase(String str) {
+        return str.substring(0, 1).toLowerCase() + str.substring(1, str.length());
     }
 
     private static Matcher getMatcher(String str, String regex) {

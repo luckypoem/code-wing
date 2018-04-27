@@ -22,6 +22,14 @@ public class ListLabelReplacer extends LabelReplacer {
     @Override
     protected String generateResultString(String content) {
 
+        if (content.startsWith("\n")) {
+            content = StringTool.deleteFirstChar(content);
+        }
+
+//        if (content.endsWith("\n")) {
+//            content = StringTool.deleteLastChar(content);
+//        }
+
         Map<String, String> params = getParams();
         String listId = params.get("list");
 
@@ -34,17 +42,24 @@ public class ListLabelReplacer extends LabelReplacer {
 
         Map<String, String> fields = BeanTool.parseEL(content,
                 Collections.singletonList(varName));
-        List list = (List) bean;
+
+        Object[] targetArray = ((List) bean).toArray();
 
         StringBuilder sb = new StringBuilder();
         String loop;
-        for (Object obj : list) {
+        for (int i = 0; i < targetArray.length; ++i) {
             loop = content;
             if (fields != null) {
                 for (Map.Entry<String, String> entry : fields.entrySet()) {
 
-                    String replace = BeanTool.getBeanReplacement(entry.getValue(), obj);
+                    String replace = BeanTool.getBeanReplacement(
+                            entry.getValue(), targetArray[i]);
                     loop = loop.replaceAll(entry.getKey(), replace);
+
+                    if (i == targetArray.length - 1 &&
+                            loop.endsWith("\n")) {
+                        loop = StringTool.deleteLastChar(loop);
+                    }
                 }
             }
             sb.append(loop);
