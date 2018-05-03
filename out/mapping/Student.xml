@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="codewing.dao.StudentDAO">
+
+    <resultMap id="StudentMap" type="Student">
+        <id column="stuid" property="stuid"/>
+        <result column="psprtid" property="psprtid"/>
+        <result column="psprtfamily" property="psprtfamily"/>
+        <result column="psprtname" property="psprtname"/>
+        <result column="bthday" property="bthday"/>
+        <result column="bthplc" property="bthplc"/>
+        <result column="colid" property="colid"/>
+        <result column="majid" property="majid"/>
+        <result column="majtwid" property="majtwid"/>
+        <result column="cntryid" property="cntryid"/>
+        <result column="type" property="type"/>
+        <result column="stay" property="stay"/>
+        <result column="sex" property="sex"/>
+        <result column="fundcome" property="fundcome"/>
+        <result column="shrtgrp" property="shrtgrp"/>
+        <result column="fundway" property="fundway"/>
+        <result column="marry" property="marry"/>
+        <result column="status" property="status"/>
+        <result column="apyday" property="apyday"/>
+        <result column="acptday" property="acptday"/>
+        <result column="rprtday" property="rprtday"/>
+        <result column="lastreg" property="lastreg"/>
+        <result column="eduday" property="eduday"/>
+        <result column="leavday" property="leavday"/>
+        <result column="leavrsn" property="leavrsn"/>
+        <result column="school" property="school"/>
+        <result column="address" property="address"/>
+        <result column="phone" property="phone"/>
+        <result column="job" property="job"/>
+        <result column="place" property="place"/>
+        <result column="religion" property="religion"/>
+        <result column="reportschool" property="reportschool"/>
+        <result column="language" property="language"/>
+        <result column="curplace" property="curplace"/>
+        <result column="curphone" property="curphone"/>
+        <result column="chinesename" property="chinesename"/>
+        <result column="CSC" property="CSC"/>
+        <result column="HSK" property="HSK"/>
+        <result column="majorbegin" property="majorbegin"/>
+        <result column="majorend" property="majorend"/>
+        <result column="edu" property="edu"/>
+        <result column="chineseschool" property="chineseschool"/>
+        <result column="chinesestart" property="chinesestart"/>
+        <result column="chineseend" property="chineseend"/>
+        <result column="recommand" property="recommand"/>
+        <result column="guarantee" property="guarantee"/>
+        <result column="economy" property="economy"/>
+        <result column="motherlang" property="motherlang"/>
+        <result column="good" property="good"/>
+        <result column="teacher" property="teacher"/>
+        <result column="englevel" property="englevel"/>
+        <result column="reportbegin" property="reportbegin"/>
+        <result column="reportend" property="reportend"/>
+        <result column="visatype" property="visatype"/>
+        <result column="costdone" property="costdone"/>
+        <result column="cls" property="cls"/>
+        <result column="sendcontry" property="sendcontry"/>
+        <result column="sendway" property="sendway"/>
+        <result column="email" property="email"/>
+    </resultMap>
+
+    <select id="findById" resultMap="StudentMap">
+        SELECT stuid,psprtid,psprtfamily,psprtname,bthday,bthplc,colid,majid,majtwid,cntryid,type,stay,sex,fundcome,shrtgrp,fundway,marry,status,apyday,acptday,rprtday,lastreg,eduday,leavday,leavrsn,school,address,phone,job,place,religion,reportschool,language,curplace,curphone,chinesename,CSC,HSK,majorbegin,majorend,edu,chineseschool,chinesestart,chineseend,recommand,guarantee,economy,motherlang,good,teacher,englevel,reportbegin,reportend,visatype,costdone,cls,sendcontry,sendway,email
+        FROM student
+        WHERE stuid=stuid
+    </select>
+
+    <insert id="doCreate" parameterType="Student" >
+        INSERT INTO student(stuid,psprtid,psprtfamily,psprtname,bthday,bthplc,colid,majid,majtwid,cntryid,type,stay,sex,fundcome,shrtgrp,fundway,marry,status,apyday,acptday,rprtday,lastreg,eduday,leavday,leavrsn,school,address,phone,job,place,religion,reportschool,language,curplace,curphone,chinesename,CSC,HSK,majorbegin,majorend,edu,chineseschool,chinesestart,chineseend,recommand,guarantee,economy,motherlang,good,teacher,englevel,reportbegin,reportend,visatype,costdone,cls,sendcontry,sendway,email)
+        VALUES(#{stuid},#{psprtid},#{psprtfamily},#{psprtname},#{bthday},#{bthplc},#{colid},#{majid},#{majtwid},#{cntryid},#{type},#{stay},#{sex},#{fundcome},#{shrtgrp},#{fundway},#{marry},#{status},#{apyday},#{acptday},#{rprtday},#{lastreg},#{eduday},#{leavday},#{leavrsn},#{school},#{address},#{phone},#{job},#{place},#{religion},#{reportschool},#{language},#{curplace},#{curphone},#{chinesename},#{CSC},#{HSK},#{majorbegin},#{majorend},#{edu},#{chineseschool},#{chinesestart},#{chineseend},#{recommand},#{guarantee},#{economy},#{motherlang},#{good},#{teacher},#{englevel},#{reportbegin},#{reportend},#{visatype},#{costdone},#{cls},#{sendcontry},#{sendway},#{email})
+    </insert>
+
+    <update id="doRemove" parameterType="String">
+        DELETE FROM student
+        WHERE stuid=#{stuid}
+    </update>
+
+</mapper>

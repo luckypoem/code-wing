@@ -1,0 +1,45 @@
+#!/bin/bash
+echo "welcome to use codewing-daocoder, version: 0.0.1."
+cmd=""
+if [ $JAVA_HOME  ]; then
+    cmd=${cmd}"$JAVA_HOME/bin/java"
+    echo "Found JAVA_HOME, use default jdk environment."
+else
+    echo "WARNING: You did not defined JAVA_HOME, this may call undefined situation."
+    $cmd="java"
+fi
+
+echo "jdk infomation: "
+version=${cmd}" -version"
+$($version)
+
+if [ !$CODEWING_HOME  ]; then
+    echo "WARNING: You did not defined CODEWING_HOME, this may call undefined situation."
+    CODEWING_HOME=$(cd ../; pwd)
+fi
+
+lib=$CODEWING_HOME/lib
+
+jars=$(ls $lib/*.jar)
+classpath=""
+
+for jar in ${jars[@]}; do
+    classpath=${classpath}":$jar"
+done
+
+classpath=${classpath#*:}
+
+echo $classpath
+
+cmd=${cmd}" -Xbootclasspath/a:$classpath -cp $lib/codewing.daocoder-0.0.1.jar cn.lazycat.codewing.daocoder.CmdStarter --wing-path $CODEWING_HOME $*"
+echo "Use codewing's home: $CODEWING_HOME"
+
+echo $cmd
+
+echo "STARTING coder PROCESS !!!"
+
+echo
+echo
+
+# echo $cmd
+$cmd

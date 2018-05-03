@@ -1,0 +1,34 @@
+<wing:schema version='1.0'/>
+<wing:bean use='bean'/>
+<wing:bean use='id'/>
+<wing:bean use='res'/>
+<wing:bean use='insert'/>
+<wing:bean use='select'/>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${bean.daoPackage}.${bean.javaName}DAO">
+
+    <resultMap id="${bean.javaName}Map" type="${bean.javaName}">
+        <id column="${id.dbName}" property="${id.javaName}"/>
+<wing:foreach list='res' var='f' deleteLast=false>
+        <result column="${f.dbName}" property="${f.javaName}"/>
+</wing:foreach>
+    </resultMap>
+
+    <select id="findById" resultMap="${bean.javaName}Map">
+        SELECT <wing:foreach list='select' var='f'>${f.dbName},</wing:foreach>
+        FROM ${bean.dbName}
+        WHERE ${id.dbName}=${id.javaName}
+    </select>
+
+    <insert id="doCreate" parameterType="${bean.javaName}" <wing:if test='bean.idAutoIncrement'>useGeneratedKeys="true" keyProperty="${id.javaName}"</wing:if>>
+        INSERT INTO ${bean.dbName}(<wing:foreach list='insert' var='f'>${f.dbName},</wing:foreach>)
+        VALUES(<wing:foreach list='insert' var='f'>#{${f.javaName}},</wing:foreach>)
+    </insert>
+
+    <update id="doRemove" parameterType="${id.javaType}">
+        DELETE FROM ${bean.dbName}
+        WHERE ${id.dbName}=#{${id.javaName}}
+    </update>
+
+</mapper>
