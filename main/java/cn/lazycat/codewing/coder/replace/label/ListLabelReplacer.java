@@ -26,16 +26,12 @@ public class ListLabelReplacer extends LabelReplacer {
             content = StringTool.deleteFirstChar(content);
         }
 
-//        if (content.endsWith("\n")) {
-//            content = StringTool.deleteLastChar(content);
-//        }
-
         Map<String, String> params = getParams();
         String listId = params.get("list");
 
         Object bean = beans.get(listId);
         if (!(bean instanceof List)) {
-            throw new RuntimeException(new ObjectNotListException(listId));
+            throw new ObjectNotListException(listId);
         }
 
         String varName = params.get("var");

@@ -3,7 +3,7 @@ package cn.lazycat.codewing.coder.exception;
 /**
  * The bean is declared in the schema, but this bean is not found in beanPool.
  */
-public class BeanNotFoundException extends Exception {
+public class BeanNotFoundException extends RuntimeException {
 
     private String beanId;
 

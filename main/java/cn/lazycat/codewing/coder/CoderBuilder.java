@@ -2,11 +2,12 @@ package cn.lazycat.codewing.coder;
 
 import cn.lazycat.codewing.coder.replace.BeanReplacer;
 import cn.lazycat.codewing.coder.replace.Replacer;
+import cn.lazycat.codewing.coder.replace.label.IfLabelReplacer;
 import cn.lazycat.codewing.coder.replace.label.ListLabelReplacer;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CoderBuilder {
@@ -14,32 +15,15 @@ public class CoderBuilder {
     private CoderBuilder() {
     }
 
-    public static Coder build() {
-        return new Coder(schema, replacerList);
+    public static Coder build(String inputPath) throws IOException {
+        List<Replacer> replacers = new ArrayList<>(3);
+        replacers.add(new BeanReplacer());
+        replacers.add(new ListLabelReplacer());
+        replacers.add(new IfLabelReplacer());
+
+        Schema schema = new Schema();
+        schema.setInput(new FileInputStream(inputPath));
+
+        return new Coder(schema, replacers);
     }
-
-    public static void setSchemaInputFile(String path)
-            throws IOException {
-        if (schema == null) {
-            schema = new Schema();
-        }
-        schema.setInput(new FileInputStream(path));
-    }
-
-    public static void appendReplacer(Replacer replacer) {
-        replacerList.add(replacer);
-    }
-
-    public static void appendBasicReplacer() {
-        replacerList.add(new ListLabelReplacer());
-        replacerList.add(new BeanReplacer());
-    }
-
-    public static void clearReplacer() {
-        replacerList.clear();
-    }
-
-    private static Schema schema;
-
-    private static List<Replacer> replacerList = new LinkedList<>();
 }

@@ -5,7 +5,7 @@ package cn.lazycat.codewing.coder.exception;
  * If the bean defined in list label is not a List object,
  * this exception will be thrown.
  */
-public class ObjectNotListException extends Exception {
+public class ObjectNotListException extends RuntimeException {
 
     private String id;
     public ObjectNotListException(String id) {

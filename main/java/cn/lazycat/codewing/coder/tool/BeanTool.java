@@ -53,4 +53,19 @@ public class BeanTool {
         }
         return replace;
     }
+
+    public static boolean notNull(Object ... objects) {
+        for (Object obj : objects) {
+            if (obj == null) {
+                return false;
+            }
+            if (obj instanceof String) {
+                String str = (String) obj;
+                if ("".equals(str)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }
