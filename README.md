@@ -48,4 +48,6 @@ $ coder-dao -j jdbc:mysql://localhost:3306/test -u root -p 12345 -t person
 
 随后可以在out目录下看到对应的结果.
 
+更多的参数和说明,您可以直接输入coder-dao查看到.
+
 如果您有问题,发送邮件到lazycat_develop@163.com吧!
