@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="codewing.dao.CourseDAO">
+
+    <resultMap id="CourseMap" type="Course">
+        <id column="cid" property="cid"/>
+        <result column="name" property="name"/>
+        <result column="lang" property="lang"/>
+        <result column="semester" property="semester"/>
+        <result column="teacher" property="teacher"/>
+        <result column="info" property="info"/>
+    </resultMap>
+
+    <select id="findById" resultMap="CourseMap">
+        SELECT cid,name,lang,semester,teacher,info
+        FROM course
+        WHERE cid=cid
+    </select>
+
+    <insert id="doCreate" parameterType="Course" useGeneratedKeys="true" keyProperty="cid">
+        INSERT INTO course(name,lang,semester,teacher,info)
+        VALUES(#{name},#{lang},#{semester},#{teacher},#{info})
+    </insert>
+
+    <update id="doRemove" parameterType="Integer">
+        DELETE FROM course
+        WHERE cid=#{cid}
+    </update>
+
+</mapper>
