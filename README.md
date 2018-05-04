@@ -18,6 +18,7 @@ CodeWing是一款极其轻量的,能够自动生成代码的自动化工具.核�
 要想使用CodeWing,您需要从GitHub或码云将项目clone到本地,注意,CodeWing是用Java编写的,在您的机器上需要有Java 1.6以上的运行环境(在您的机器中至少应该定义JAVA_HOME环境变量).
 
 ```text
+$ git clone -b master https://github.com/LovelyLazyCat/code-wing codewing
 $ git clone -b master https://gitee.com/lazycat_develop/CodeWing.git codewing
 ```
 
